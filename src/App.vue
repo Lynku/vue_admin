@@ -1,102 +1,91 @@
 <template>
   <div id="app">
     <header class="meta">
-      <h1>{{ $route.meta.title }}</h1>
-      <img
-        v-show="$route.path === '/'"
-        src="/logo.png"
-        alt="VeeValidate Logo"
-        width="200"
-      />
-      <p>{{ $route.meta.description }}</p>
-      <div class="buttons">
-        ️️<router-link
-          class="button is-primary is-small"
-          v-show="$route.path !== '/'"
-          to="/"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="1.1"
-            width="24"
-            height="24"
-            viewBox="0 0 20 20"
-            class="icon icon-arrow-back"
+      <nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/"
+            ><i class="bi bi-compass-fill"></i
+          ></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <title>arrow back</title>
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M4.29,12.71a1,1,0,0,1,0-1.42l4-4A1,1,0,1,1,9.71,8.71L7.41,11H19a1,1,0,0,1,0,2H7.41l2.3,2.29a1,1,0,0,1,0,1.42,1,1,0,0,1-1.42,0Z"
-            />
-          </svg>
-          <span>Back to examples</span>
-        </router-link>
-        <a
-          class="button is-info is-small"
-          v-if="$route.path !== '/'"
-          target="_blank"
-          rel="noopener"
-          href="https://baianat.github.io/vee-validate"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="1.1"
-            width="24"
-            height="24"
-            viewBox="0 0 20 20"
-            class="icon icon-library-books"
-          >
-            <title>library books</title>
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M7,2A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H19a1,1,0,0,0,1-1V3a1,1,0,0,0-1-1ZM9,7h6a1,1,0,0,1,0,2H9A1,1,0,0,1,9,7Zm0,4h3a1,1,0,0,1,0,2H9a1,1,0,0,1,0-2Zm9,8v1H7a1,1,0,0,1,0-2H18Z"
-            />
-          </svg>
-          <span>Docs</span>
-        </a>
-      </div>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main>
-      <div class="grid">
-        <div class="column"><router-view></router-view></div>
+      <div class="container-fluid g-0">
+        <div class="row g-0">
+          <div class="col-3">
+            <navigation></navigation>
+          </div>
+          <div class="col-9 card">
+              <div class="card-header">
+                App...
+              </div>
+          <router-view></router-view>
+          </div>
+        </div>
       </div>
     </main>
+
     <footer></footer>
   </div>
 </template>
 
 <script>
+import Navigation from './components/Navigation.vue';
+import  Route  from 'vue-router';
+
 export default {
-  name: "App"
+  components: { Navigation },
+  name: "App",
 };
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
-  padding: 20px;
+.row.g-0{
+  min-height: 85vh;
 }
-
-a {
-  display: block;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.meta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 30px;
+.row.g-0 .col-3{
+  background-color: var(--bs-gray);
 }
 </style>

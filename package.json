@@ -15,7 +15,7 @@
   "dependencies": {
     "@blexar/framework": "0.0.33",
     "vee-validate": "2.1.7",
-    "vue": "2.6.6",
+    "vue": "^2.6.14",
     "vue-router": "3.0.2",
     "vuex": "3.1.0"
   },
@@ -64,7 +64,7 @@
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "^2.6.14",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
@@ -74,6 +74,15 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
-  "keywords": ["vee-validate", "examples", "forms", "validation", "vue"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "keywords": [
+    "vee-validate",
+    "forms",
+    "validation",
+    "vue"
+  ]
 }
