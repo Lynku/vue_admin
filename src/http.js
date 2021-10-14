@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const apiUrl = 'localhost:8081'
+const apiUrl = 'http://api.dev.org/root/'
 
 async function doAjax(url = '', httpMethod, data = {}) {
   // Default options are marked with *
@@ -10,7 +10,7 @@ async function doAjax(url = '', httpMethod, data = {}) {
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Headers': '*'
+      'Access-Control-Allow-Origin': '*'
     },
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     // body data type must match "Content-Type" header
@@ -37,6 +37,9 @@ const http = {
   },
   post: (path, data) => {
     return doAjax(path, 'PUT');
+  },
+  delete: (path) => {
+    return doAjax(path, 'DELETE');
   }
 }
 

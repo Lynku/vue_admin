@@ -2,43 +2,28 @@
   <div class="field">
     <input
       type="text"
-      ref="input"
-      :name="name"
-      @input="$emit('input', $event.target.value);"
-      class="input"
+      :name="data.name"
+      :id="data.name"
+      :placeholder="data.name"
+      class="form-control"
       :class="{ 'is-danger': error }"
+      v-model="data.value"
     />
-    <small v-if="error" class="field-text is-danger">{{ error }}</small>
   </div>
 </template>
 
 <script>
 export default {
-  name: "text-input",
-  $_veeValidate: {
-    // value getter
-    value() {
-      return this.$el.value;
-    },
-    // name getter
-    name() {
-      return this.name;
-    }
-  },
+  name: "TextInput",
   props: {
-    name: String,
-    value: {
-      type: null,
-      default: null
-    },
+    data: {},
     error: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
-  mounted() {
-    // synbc the input to the initial value
-    this.$refs.input.value = this.value;
-  }
+  data: () => ({
+    dataValue: this.data,
+  }),
 };
 </script>

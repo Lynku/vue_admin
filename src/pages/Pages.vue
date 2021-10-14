@@ -3,18 +3,16 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
+        <th scope="col">Title</th>
         <th scope="col">Status</th>
         <th scope="col">Acrtions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in userList" :key="user.id">
-        <th scope="row">{{ user.id }}</th>
-        <td>{{ user.Name }}</td>
-        <td>{{ user.Email }}</td>
-        <td>{{ user.Status }}</td>
+      <tr v-for="page in pages" :key="page.id">
+        <th scope="row">{{ page.id }}</th>
+        <td>{{ page.Title }}</td>
+        <td>{{ page.Status }}</td>
         <td>
           <a class="btn btn-success">E</a>
           <a class="btn btn-error">D</a>
@@ -25,15 +23,15 @@
 </template>
 
 <script>
-import http from "../http";
+
 export default {
-  name: "Users",
-  data: () => ({
-    userList: [],
+  name: 'Pages',
+   data: () => ({
+    pages: [],
   }),
   mounted: function () {
-    http.get("users").then((r) => {
-      this.userList = r.data;
+    http.get("pages/2").then((r) => {
+      this.pages = r.data;
     });
   },
 };
