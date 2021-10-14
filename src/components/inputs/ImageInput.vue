@@ -1,46 +1,30 @@
 <template>
   <div class="field">
-    <input
+    to finish
+    <!-- <input
       type="file"
-      ref="input"
-      :name="name"
-      :id="name"
-      :placeholder="name"
-      @input="$emit('input', $event.target.value)"
+      :name="data.name"
+      :id="data.name"
+      v-model="data.value"
       class="form-control"
-      :class="{ 'is-danger': error }"
-    />
-    <small v-if="error" class="field-text is-danger">{{ error }}</small>
+    /> -->
+    <img v-if="data.value" :src="data.value" />
   </div>
 </template>
 
 <script>
 export default {
   name: "ImageInput",
-  $_veeValidate: {
-    // value getter
-    value() {
-      return this.$el.value;
-    },
-    // name getter
-    name() {
-      return this.name;
-    },
-  },
   props: {
+    data: {},
     name: String,
-    value: {
-      type: null,
-      default: null,
-    },
     error: {
       type: String,
       default: null,
     },
   },
-  mounted() {
-    // synbc the input to the initial value
-    this.$refs.input.value = this.value;
-  },
+  data: () => ({
+    dataValue: this.data,
+  }),
 };
 </script>

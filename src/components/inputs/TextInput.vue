@@ -17,6 +17,7 @@ export default {
   name: "TextInput",
   props: {
     data: {},
+    name: String,
     error: {
       type: String,
       default: null,

@@ -1,46 +1,32 @@
 <template>
   <div class="field">
-    <label :id="'l_'+name">{{name}}</label>
+    <label :id="'l_' + name">{{ name }} </label>
     <input
-      :for="'l_'+name"
-      type="radio"
-      ref="input"
-      :name="name"
-      :id="name"
-      @input="$emit('input', $event.target.value)"
+      :for="'l_' + name"
+      :name="data.name"
+      :id="data.name"
+      :placeholder="data.name"
+      class="form-control"
       :class="{ 'is-danger': error }"
+      v-model="data.value"
     />
-    <small v-if="error" class="field-text is-danger">{{ error }}</small>
+    - add repeater
   </div>
 </template>
 
 <script>
 export default {
   name: "RadioInput",
-  $_veeValidate: {
-    // value getter
-    value() {
-      return this.$el.value;
-    },
-    // name getter
-    name() {
-      return this.name;
-    },
-  },
   props: {
+    data: {},
     name: String,
-    value: {
-      type: null,
-      default: null,
-    },
     error: {
       type: String,
       default: null,
     },
   },
-  mounted() {
-    // synbc the input to the initial value
-    this.$refs.input.value = this.value;
-  },
+  data: () => ({
+    dataValue: this.data,
+  }),
 };
 </script>

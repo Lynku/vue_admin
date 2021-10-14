@@ -2,11 +2,12 @@
   <div class="field">
     <select
       ref="input"
-      :name="name"
-      :id="name"
-      @input="$emit('input', $event.target.value)"
+      :name="data.name"
+      :id="data.name"
+      :placeholder="data.name"
       class="form-control"
       :class="{ 'is-danger': error }"
+      v-model="data.value"
     >
       <option value="" disabled>{{ name }}</option>
       <option value="1">{{ name }}</option>
@@ -17,30 +18,16 @@
 <script>
 export default {
   name: "DropdownInput",
-  $_veeValidate: {
-    // value getter
-    value() {
-      return this.$el.value;
-    },
-    // name getter
-    name() {
-      return this.name;
-    },
-  },
   props: {
+    data: {},
     name: String,
-    value: {
-      type: null,
-      default: null,
-    },
     error: {
       type: String,
       default: null,
     },
   },
-  mounted() {
-    // synbc the input to the initial value
-    this.$refs.input.value = this.value;
-  },
+  data: () => ({
+    dataValue: this.data,
+  }),
 };
 </script>
