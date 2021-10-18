@@ -29,7 +29,7 @@
       ></component>
     </div>
 
-    <button class="btn" type="button" @click="save()">Save</button>
+    <button class="btn btn-primary" type="button" @click="save()">Save</button>
   </div>
 </template>
 
@@ -85,6 +85,10 @@ export default {
   },
   methods: {
     save() {
+      http.put("page/" + this.$route.params.id, this.page).then((r) => {
+        console.log(r);
+        this.page = r.data;
+      });
       console.log(this.page);
     },
   },
