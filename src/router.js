@@ -44,6 +44,16 @@ export let routes = [
     }
   },
   {
+    path: '/type/:id',
+    component: useComponent('EditType'),
+    meta: {}
+  },
+  {
+    path: '/type/new',
+    component: useComponent('EditType'),
+    meta: {}
+  },
+  {
     path: '/settings',
     component: useComponent('Settings'),
     meta: {
