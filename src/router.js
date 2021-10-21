@@ -38,7 +38,7 @@ export let routes = [
     meta: {}
   },
   {
-    path: '/type/new',
+    path: '/type_new',
     component: useComponent('EditType'),
     meta: {}
   },

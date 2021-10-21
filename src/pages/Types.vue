@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="btn btn-sm btn-primary float-end" to="/type/new">
+    <router-link class="btn btn-sm btn-primary float-end" to="/type_new">
       + Add New
     </router-link>
     <table class="table">

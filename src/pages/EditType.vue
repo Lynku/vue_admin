@@ -38,8 +38,7 @@ export default {
   },
   name: "EditType",
   data: () => ({
-    data: [
-    ],
+    data: {},
   }),
   mounted: function () {
     if (this.$route.params.id) {
@@ -48,8 +47,9 @@ export default {
         this.data['remove'] = [];
       });
     } else {
-      http.get("type/new/").then((r) => {
+      http.get("type/new").then((r) => {
         this.data = r.data;
+        this.data['type'] = {'name':''};
       });
     }
   },
@@ -73,12 +73,11 @@ export default {
     save() {
       if (this.$route.params.id) {
         http.put("type/" + this.$route.params.id, this.data).then((r) => {
-          console.log(r);
           this.data = r.data;
         });
       } else {
         http
-          .post("type/new/" + this.$route.params.type, this.data)
+          .post("type/new", this.data)
           .then((r) => {
             this.data = r.data;
           });
