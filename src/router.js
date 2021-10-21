@@ -15,14 +15,17 @@ export let routes = [
     }
   },
   {
-    path: '/pages/:id',
+    path: '/pages/:type',
     component: useComponent('Pages'),
-    meta: {
-      title: ' #'
-    }
+    meta: {}
   },
   {
     path: '/page/:id',
+    component: useComponent('EditPage'),
+    meta: {}
+  },
+  {
+    path: '/page/new/:type',
     component: useComponent('EditPage'),
     meta: {}
   },
@@ -55,17 +58,5 @@ export const router = new VueRouter({
   routes
 });
 
-//@todo
-// http.get('types').then((r) => {
-//   r.data.forEach(e => {
-//     router.push({
-//       path: 'page/' + e.ID,
-//       component: useComponent('Pages'),
-//       meta: {
-//         title: e.Name
-//       }
-//     });
-//   });
-// });
 
 export default router;

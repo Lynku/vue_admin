@@ -6,7 +6,7 @@
         class="form-control"
         id="title"
         name="title"
-        v-model="page.Title"
+        v-model="data.page.title"
         placeholder="Title"
       />
     </div>
@@ -16,13 +16,13 @@
         id="content"
         name="content"
         rows="3"
-        v-model="page.Content"
+        v-model="data.page.content"
       ></textarea>
     </div>
 
-    <div v-if="page.Fields">
+    <div v-if="data.fields">
       <component
-        v-for="filed in page.Fields"
+        v-for="filed in data.fields"
         :key="filed.name"
         :is="filed.type"
         :data="filed"
@@ -70,26 +70,39 @@ export default {
   },
   name: "EditPage",
   data: () => ({
-    page: [],
+    data: [],
   }),
   mounted: function () {
-    http.get("page/" + this.$route.params.id).then((r) => {
-      this.page = r.data;
-    });
+    if (this.$route.params.type) {
+      http.get("page/new/" + this.$route.params.type).then((r) => {
+        this.data = r.data;
+      });
+    } else {
+      http.get("page/" + this.$route.params.id).then((r) => {
+        this.data = r.data;
+      });
+    }
   },
   watch: {
-    page: function (newVal, oldVal) {
+    data: function (newVal, oldVal) {
       // watch it
       console.log("Prop changed: ", newVal, " | was: ", oldVal);
     },
   },
   methods: {
     save() {
-      http.put("page/" + this.$route.params.id, this.page).then((r) => {
-        console.log(r);
-        this.page = r.data;
-      });
-      console.log(this.page);
+      if (this.$route.params.type) {
+        http.post("page/new/" + this.$route.params.type, this.data).then((r) => {
+          this.data = r.data;
+        });
+      } else {
+        http
+          .put("page/update/" + this.$route.params.id, this.data)
+          .then((r) => {
+            console.log(r);
+            this.data = r.data;
+          });
+      }
     },
   },
 };

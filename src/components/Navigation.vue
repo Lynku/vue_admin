@@ -13,23 +13,40 @@
 </template>
 
 <script>
-import { routes } from "../router";
+import { routes, router } from "../router";
 import http from "../http";
 
 export default {
   name: "navigation",
   data: () => ({
-    linkPages: routes.map((r) => {
+    linkPages: routes
+      .map((r) => {
         return {
           path: r.path,
           name: r.meta.title,
         };
-    }),
+      })
+      .filter((r) => {
+        return r.name != undefined;
+      }),
   }),
+  watch: {
+    linkPages: (newVal, oldVal) => {},
+  },
   computed: {
     isActive() {
       return this.path === this.$root.currentRoute;
     },
+  },
+  mounted: function () {
+    http.get("types").then((r) => {
+      r.data.forEach((e) => {
+        this.linkPages.push({
+          path: "/pages/" + e.id,
+          name: e.name,
+        });
+      });
+    });
   },
 };
 </script>

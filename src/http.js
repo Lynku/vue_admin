@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const apiUrl = 'http://api.dev.org/root/'
+const apiUrl = 'http://127.0.0.1:5000/'
 
 async function doAjax(url = '', httpMethod, data = {}) {
   // Default options are marked with *

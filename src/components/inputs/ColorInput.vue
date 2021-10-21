@@ -1,8 +1,8 @@
 <template>
   <div class="field">
-    <label :id="'l_' + name">{{ name }}</label>
+    <label :id="'l_' + data.name">{{ data.name }}</label>
     <input
-      :for="'l_' + name"
+      :for="'l_' + data.name"
       type="color"
       :name="data.name"
       :id="data.name"

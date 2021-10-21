@@ -9,8 +9,8 @@
       :class="{ 'is-danger': error }"
       v-model="data.value"
     >
-      <option value="" disabled>{{ name }}</option>
-      <option value="1">{{ name }}</option>
+      <option value="" disabled>{{ data.name }}</option>
+      <option value="1">{{ data.name }}</option>
     </select>
   </div>
 </template>

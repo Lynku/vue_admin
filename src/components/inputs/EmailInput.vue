@@ -2,7 +2,7 @@
   <div class="field">
     <input
       type="email"
-       :name="data.name"
+      :name="data.name"
       :id="data.name"
       :placeholder="data.name"
       class="form-control"
