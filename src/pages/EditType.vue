@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 p-3">
+  <div class="w-100 p-3 ">
     <div class="mb-3">
       <input
         type="text"
@@ -18,7 +18,7 @@
         :data="filed"
         :posibility="data.posibility"
       >
-      <button class="btn btn-danger" type="button" @click="toRemove(index)"> - </button>
+      <button class="btn btn-danger remove" type="button" @click="toRemove(index)"> - </button>
       </field-option>
     </div>
     <button class="btn btn-success" type="button" @click="newOption()"> + ADD </button>
@@ -87,3 +87,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.remove{
+  max-width: 32px;
+  align-self: end;
+}
+</style>

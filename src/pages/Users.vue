@@ -6,7 +6,7 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Status</th>
-        <th scope="col">Acrtions</th>
+        <th scope="col" class="text-end">Acrtions</th>
       </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
         <td>{{ user.Name }}</td>
         <td>{{ user.Email }}</td>
         <td>{{ user.Status }}</td>
-        <td>
+        <td class="text-end">
           <a class="btn btn-success">E</a>
           <a class="btn btn-error">D</a>
         </td>

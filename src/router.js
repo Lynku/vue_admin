@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import http from './http';
+import icons from './assets/svg';
 Vue.use(VueRouter);
 
 const useComponent = component => () =>
@@ -11,7 +11,9 @@ export let routes = [
     path: '/',
     component: useComponent('Dashboard'),
     meta: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      position: 'top',
+      icon: icons.home
     }
   },
   {
@@ -29,20 +31,7 @@ export let routes = [
     component: useComponent('EditPage'),
     meta: {}
   },
-  {
-    path: '/users',
-    component: useComponent('Users'),
-    meta: {
-      title: 'Users'
-    }
-  },
-  {
-    path: '/types',
-    component: useComponent('Types'),
-    meta: {
-      title: 'Types'
-    }
-  },
+
   {
     path: '/type/:id',
     component: useComponent('EditType'),
@@ -53,11 +42,32 @@ export let routes = [
     component: useComponent('EditType'),
     meta: {}
   },
+  
+  {
+    path: '/users',
+    component: useComponent('Users'),
+    meta: {
+      title: 'Users',
+      position: 'bottom',
+      icon: icons.users
+    }
+  },
+  {
+    path: '/types',
+    component: useComponent('Types'),
+    meta: {
+      title: 'Types',
+      position: 'bottom',
+      icon: icons.types
+    }
+  },
   {
     path: '/settings',
     component: useComponent('Settings'),
     meta: {
-      title: 'Settings'
+      title: 'Settings',
+      position: 'bottom',
+      icon: icons.settings
     }
   }
 ];
