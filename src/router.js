@@ -53,6 +53,16 @@ export let routes = [
     }
   },
   {
+    path: '/user/:id',
+    component: useComponent('EditUser'),
+    meta: {}
+  },
+  {
+    path: '/user_new',
+    component: useComponent('EditUser'),
+    meta: {}
+  },
+  {
     path: '/types',
     component: useComponent('Types'),
     meta: {
@@ -75,7 +85,8 @@ export let routes = [
 
 
 export const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 });
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 p-3 ">
+  <div class="w-100 p-3">
     <div class="mb-3">
       <input
         type="text"
@@ -18,38 +18,44 @@
         :data="filed"
         :posibility="data.posibility"
       >
-      <button class="btn btn-danger remove" type="button" @click="toRemove(index)"> - </button>
+        <button
+          class="btn btn-danger remove"
+          type="button"
+          @click="toRemove(index)"
+        >
+          -
+        </button>
       </field-option>
     </div>
-    <button class="btn btn-success" type="button" @click="newOption()"> + ADD </button>
+    <button class="btn btn-success" type="button" @click="newOption()">
+      + ADD
+    </button>
     <button class="btn btn-primary" type="button" @click="save()">Save</button>
   </div>
 </template>
 
 <script>
 import FieldOption from "../components/FieldOption.vue";
-
-
 import http from "../http";
 
 export default {
   components: {
-    FieldOption
+    FieldOption,
   },
   name: "EditType",
   data: () => ({
-    data: {},
+    data: { type: { name: "" } },
   }),
   mounted: function () {
     if (this.$route.params.id) {
       http.get("type/" + this.$route.params.id).then((r) => {
         this.data = r.data;
-        this.data['remove'] = [];
+        this.data["remove"] = [];
       });
     } else {
       http.get("type/new").then((r) => {
         this.data = r.data;
-        this.data['type'] = {'name':''};
+        this.data["type"] = { name: "" };
       });
     }
   },
@@ -57,18 +63,18 @@ export default {
     data: (newVal, oldVal) => {},
   },
   methods: {
-    newOption(){
-      this.data['options'].push({
-        'type' :'',
-        'options' :'',
-        'name' :''
-      })
+    newOption() {
+      this.data["options"].push({
+        type: "",
+        options: "",
+        name: "",
+      });
     },
-    toRemove(index){
-      if(this.data['options'][index]['id'] != undefined){
-        this.data['remove'].push(this.data['options'][index]['id']); 
+    toRemove(index) {
+      if (this.data["options"][index]["id"] != undefined) {
+        this.data["remove"].push(this.data["options"][index]["id"]);
       }
-      this.data['options'].splice(index, 1);
+      this.data["options"].splice(index, 1);
     },
     save() {
       if (this.$route.params.id) {
@@ -76,18 +82,16 @@ export default {
           this.data = r.data;
         });
       } else {
-        http
-          .post("type/new", this.data)
-          .then((r) => {
-            this.data = r.data;
-          });
+        http.post("type/new", this.data).then((r) => {
+          this.data = r.data;
+        });
       }
     },
   },
 };
 </script>
 <style scoped>
-.remove{
+.remove {
   max-width: 32px;
   align-self: end;
 }

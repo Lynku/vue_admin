@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 p-3">
+  <div v-if='data.page' class="w-100 p-3">
     <div class="mb-3">
       <input
         type="text"
@@ -93,7 +93,7 @@ export default {
     save() {
       if (this.$route.params.type) {
         http.post("page/new/" + this.$route.params.type, this.data).then((r) => {
-          this.data = r.data;
+          this.$router.push({path: '/pages/'+this.$route.params.type}) 
         });
       } else {
         http

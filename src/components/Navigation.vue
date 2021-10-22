@@ -6,6 +6,7 @@
           class="list-group-item d-flex align-items-center"
           :class="{ active: isActive }"
           :to="ex.path"
+          :key="ex.path"
         >
           <span v-html="ex.icon"></span>
           <span>{{ ex.name }}</span>
@@ -19,6 +20,7 @@
           class="list-group-item"
           :class="{ active: isActive }"
           :to="ex.path"
+          :key="ex.path"
         >
           <span v-html="ex.icon"></span>
           <span>{{ ex.name }}</span>
@@ -69,7 +71,12 @@ export default {
   },
   computed: {
     isActive() {
-      return this.path === this.$root.currentRoute;
+      return this.path === this.$route.path;
+    },
+  },
+  methods: {
+    goTo(path) {
+      this.$router.go(0);
     },
   },
   mounted: function () {
@@ -77,6 +84,7 @@ export default {
       r.data.forEach((e) => {
         this.linkPagesTop.push({
           path: "/pages/" + e.id,
+          params: { type: e.id },
           name: e.name,
           position: "top",
           icon: icons.sticky,
@@ -94,17 +102,22 @@ export default {
   margin-right: 10px;
 }
 .list-group-item,
-.list-group-item.active {
+.list-group-item {
+  color: white;
   background-color: transparent;
   border-color: transparent;
   font-weight: 500;
+  border-bottom: 1px solid transparent;
 }
-.list-group.bottom::before{
+.list-group.bottom::before {
   content: "";
   width: 90%;
   margin: 0 auto;
   height: 1px;
   border-top: 2px solid white;
   border-radius: 0;
+}
+.router-link-exact-active {
+  border-bottom: 1px solid white;
 }
 </style>
