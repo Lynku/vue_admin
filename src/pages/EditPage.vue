@@ -8,20 +8,19 @@
       ></title-input>
     </div>
     <div class="mb-3">
-      <textarea
-        class="form-control"
-        id="content"
-        name="content"
-        rows="3"
+      <VueTrix
+        inputId="content"
         v-model="data.page.content"
-      ></textarea>
+        placeholder="content..."
+      />
     </div>
-
+    <hr />
     <div v-if="data.fields">
       <component
-        ref="forms"
+        class="component p-2"
         v-for="filed in data.fields"
         :key="filed.name"
+        :ref="filed.type != 'Repeater' ? 'forms' : 'repeater'"
         :is="filed.type"
         :data="filed"
       ></component>
@@ -49,11 +48,13 @@ import RadioInput from "../components/inputs/RadioInput.vue";
 import Repeater from "../components/inputs/Repeater.vue";
 import TextareInput from "../components/inputs/TextareInput.vue";
 import UrlInput from "../components/inputs/UrlInput.vue";
+import VueTrix from "vue-trix";
 
 import http from "../http";
 
 export default {
   components: {
+    VueTrix,
     TitleInput,
     TextInput,
     PhoneInput,
@@ -125,3 +126,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+.component {
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+</style>

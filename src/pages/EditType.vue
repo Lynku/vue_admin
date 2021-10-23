@@ -97,7 +97,7 @@ export default {
       ) {
         if (this.$route.params.id) {
           http.put("type/" + this.$route.params.id, this.data).then((r) => {
-            //this.$router.go(0);
+            this.$router.go(0);
           });
         } else {
           http.post("type/new", this.data).then((r) => {

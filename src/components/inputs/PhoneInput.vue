@@ -1,26 +1,52 @@
 <template>
-  <div class="field">
+  <div class="field position-relative">
+    <label> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
     <input
       type="phone"
       :name="data.name"
       :id="data.name"
       :placeholder="data.name"
       class="form-control"
-      :class="{ 'is-danger': error }"
+      :class="{ 'is-invalid': validation.hasError('data.value') }"
       v-model="data.value"
     />
+    <div class="invalid-tooltip">
+      {{ validation.firstError("data.value") }}
+    </div>
   </div>
 </template>
 
 <script>
+import SimpleVueValidation from "simple-vue-validator";
+const Validator = SimpleVueValidation.Validator;
+
 export default {
   name: "PhoneInput",
   props: {
     data: {},
-    name: String,
-    error: {
-      type: String,
-      default: null,
+  },
+  validators: {
+    "data.value": function (value) {
+      return Validator.value(value).regex(
+        "^[0-9 -+()]*$",
+        "Phone number should only contain numbers and/or `+,-,(,)`!"
+      );
+    },
+  },
+  methods: {
+    validate: function () {
+      return this.$validate().then(
+        function (success) {
+          if (success) {
+            return {
+              "data.value": this.data.value,
+            };
+          }
+        }.bind(this)
+      );
+    },
+    reset: function () {
+      this.validation.reset();
     },
   },
   data: () => ({

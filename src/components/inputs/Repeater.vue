@@ -1,11 +1,11 @@
 <template>
   <div class="field">
-    RepeaterInput - TO IMPLEMENT
+    Repeater - TO IMPLEMENT
   </div>
 </template>
 
 <script>
 export default {
-  name: "RepeaterInput",
+  name: "Repeater",
 };
 </script>
