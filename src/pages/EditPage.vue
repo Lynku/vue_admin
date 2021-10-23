@@ -1,14 +1,11 @@
 <template>
   <div v-if="data.page" class="w-100 p-3">
     <div class="mb-3">
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        v-model="data.page.title"
-        placeholder="Title"
-      />
+      <title-input
+        ref="title"
+        fieldName="Title"
+        :data="data.page"
+      ></title-input>
     </div>
     <div class="mb-3">
       <textarea
@@ -22,6 +19,7 @@
 
     <div v-if="data.fields">
       <component
+        ref="forms"
         v-for="filed in data.fields"
         :key="filed.name"
         :is="filed.type"
@@ -29,11 +27,14 @@
       ></component>
     </div>
 
-    <button class="btn btn-primary" type="button" @click="save()">Save</button>
+    <button class="btn btn-primary" type="button" @click="submit()">
+      Save
+    </button>
   </div>
 </template>
 
 <script>
+import TitleInput from "../components/inputs/TitleInput.vue";
 import TextInput from "../components/inputs/TextInput.vue";
 import PhoneInput from "../components/inputs/PhoneInput.vue";
 import CheckboxInput from "../components/inputs/CheckboxInput.vue";
@@ -53,6 +54,7 @@ import http from "../http";
 
 export default {
   components: {
+    TitleInput,
     TextInput,
     PhoneInput,
     CheckboxInput,
@@ -70,12 +72,13 @@ export default {
   },
   name: "EditPage",
   data: () => ({
-    data: [],
+    data: { page: { name: "" } },
   }),
   mounted: function () {
     if (this.$route.params.type) {
       http.get("page/new/" + this.$route.params.type).then((r) => {
         this.data = r.data;
+        this.data["page"] = { name: "" };
       });
     } else {
       http.get("page/" + this.$route.params.id).then((r) => {
@@ -87,20 +90,36 @@ export default {
     data: (newVal, oldVal) => {},
   },
   methods: {
-    save() {
-      if (this.$route.params.type) {
-        http
-          .post("page/new/" + this.$route.params.type, this.data)
-          .then((r) => {
-            this.$router.push({ path: "/pages/" + this.$route.params.type });
-          });
-      } else {
-        http
-          .put("page/update/" + this.$route.params.id, this.data)
-          .then((r) => {
-            console.log(r);
-            this.data = r.data;
-          });
+    submit() {
+      let validationFiled = [];
+
+      validationFiled.push(this.$refs.title.validate());
+      if (this.$refs.forms != undefined) {
+        this.$refs.forms.map(function (form) {
+          validationFiled.push(form.validate());
+        });
+      }
+      Promise.all(validationFiled).then(this._save);
+    },
+    _save(results) {
+      if (
+        results.filter(function (result) {
+          return !result;
+        }).length === 0
+      ) {
+        if (this.$route.params.type) {
+          http
+            .post("page/new/" + this.$route.params.type, this.data)
+            .then((r) => {
+              this.$router.push({ path: "/pages/" + this.$route.params.type });
+            });
+        } else {
+          http
+            .put("page/update/" + this.$route.params.id, this.data)
+            .then((r) => {
+              this.$router.go(0);
+            });
+        }
       }
     },
   },

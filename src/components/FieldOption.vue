@@ -29,7 +29,7 @@
           v-model="data.name"
           :class="{ 'is-invalid': validation.hasError('data.name') }"
         />
-        <small>Label: {{data.name.replace(/\_/g,' ')}}</small>
+        <small>Label: {{ data.name.replace(/\_/g, " ") }}</small>
         <div class="invalid-tooltip">
           {{ validation.firstError("data.name") }}
         </div>
@@ -37,6 +37,13 @@
       <span class="input-group-text">
         <slot></slot>
       </span>
+      <div
+        class="field row"
+        v-if="data.type == 'CheckboxInput' || data.type == 'DropdownInput'"
+      >
+        <label class="col-12">Options</label>
+        <textarea class="form-control" v-model="data.options"> </textarea>
+      </div>
     </div>
   </div>
 </template>
@@ -53,7 +60,13 @@ export default {
   },
   validators: {
     "data.name": function (value) {
-      return Validator.value(value).required().regex('^[A-Za-z\_]*$', 'Must only contain alphabetic characters and `_`!').minLength(3);
+      return Validator.value(value)
+        .required()
+        .regex(
+          "^[A-Za-z_]*$",
+          "Must only contain alphabetic characters and `_`!"
+        )
+        .minLength(3);
     },
     "data.type": function (value) {
       return Validator.value(value).required();

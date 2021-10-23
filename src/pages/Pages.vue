@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="page in pages" :key="page.id">
           <th scope="row">{{ page.id }}</th>
-          <td>{{ page.title }}</td>
+          <td>{{ page.name }}</td>
           <td>{{ page.status }}</td>
           <td class="text-end">
             <router-link class="btn btn-success" :to="'/page/' + page.id">

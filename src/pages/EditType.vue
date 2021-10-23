@@ -1,7 +1,9 @@
 <template>
   <div class="w-100 p-3">
     <div class="mb-3">
-      <text-input ref="title" :data="data.type"></text-input>
+      <title-input ref="title" 
+      fieldName='Name' 
+      :data="data.type"></title-input>
     </div>
 
     <div v-if="data.options">
@@ -30,7 +32,7 @@
 </template>
 
 <script>
-import TextInput from "../components/inputs/TextInput.vue";
+import TitleInput from "../components/inputs/TitleInput.vue";
 import FieldOption from "../components/FieldOption.vue";
 import icons from "../assets/svg";
 import http from "../http";
@@ -38,12 +40,12 @@ import http from "../http";
 export default {
   components: {
     FieldOption,
-    TextInput,
+    TitleInput,
   },
   name: "EditType",
   data: () => ({
     icons: {},
-    data: { type: { name: "type_name", value: "" } },
+    data: { type: { name: "" } },
   }),
   mounted: function () {
     this.icons = icons;
@@ -51,24 +53,23 @@ export default {
       http.get("type/" + this.$route.params.id).then((r) => {
         this.data = r.data;
         this.data["remove"] = [];
-        this.data["type"] = { name: "type_name", value: this.data["type"].name };
       });
     } else {
       http.get("type/new").then((r) => {
         this.data = r.data;
-        this.data["type"] = { name: "type_name", value: "" };
+        this.data["type"] = { name: "" };
       });
     }
   },
   watch: {
-    data: (newVal, oldVal) => {},
+    data: (newVal, oldVal) => {console.log(newVal)},
   },
   methods: {
     newOption() {
       this.data["options"].push({
         type: "",
-        options: "",
         name: "",
+        options: "{}",
       });
     },
     toRemove(index) {
@@ -78,7 +79,6 @@ export default {
       this.data["options"].splice(index, 1);
     },
     submit() {
-      console.log(this.$refs);
       let validationFiled = [];
 
       validationFiled.push(this.$refs.title.validate());
@@ -97,7 +97,7 @@ export default {
       ) {
         if (this.$route.params.id) {
           http.put("type/" + this.$route.params.id, this.data).then((r) => {
-            this.$router.go(0);
+            //this.$router.go(0);
           });
         } else {
           http.post("type/new", this.data).then((r) => {

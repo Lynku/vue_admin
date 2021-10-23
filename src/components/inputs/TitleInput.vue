@@ -1,17 +1,16 @@
 <template>
   <div class="field position-relative">
-    <label> {{data.name.toUpperCase().replace(/\_/g,' ')}}</label>
     <input
       type="text"
-      :name="data.name"
-      :id="data.name"
-      :placeholder="data.name"
+      :name="fieldName"
+      :id="fieldName"
+      :placeholder="fieldName"
       class="form-control"
-      v-model="data.value"
-      :class="{ 'is-invalid': validation.hasError('data.value') }"
+      v-model="data.name"
+      :class="{ 'is-invalid': validation.hasError('data.name') }"
     />
     <div class="invalid-tooltip">
-      {{ validation.firstError("data.value") }}
+      {{ validation.firstError("data.name") }}
     </div>
   </div>
 </template>
@@ -21,13 +20,22 @@ import SimpleVueValidation from "simple-vue-validator";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
-  name: "TextInput",
+  name: "TitleInput",
   props: {
+    fieldName: "",
     data: {},
   },
+  data: () => ({
+    dataValue: this.data,
+  }),
+  watch: {
+    value: (newVal, oldVal) => {
+      console.log(newVal, oldVal);
+    },
+  },
   validators: {
-    "data.value": function (value) {
-      return Validator.value(value).minLength(3);
+    'data.name': function (value) {
+      return Validator.value(value).required().minLength(3);
     },
   },
   methods: {
@@ -36,7 +44,7 @@ export default {
         function (success) {
           if (success) {
             return {
-              "data.value": this.data.value,
+             'data.name': this.data.name,
             };
           }
         }.bind(this)
@@ -46,8 +54,5 @@ export default {
       this.validation.reset();
     },
   },
-  data: () => ({
-    dataValue: this.data,
-  }),
 };
 </script>
