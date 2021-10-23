@@ -49,7 +49,7 @@ export default {
   },
   validators: {
     "data.name": function (value) {
-      return Validator.value(value).required();
+      return Validator.value(value).required().regex('^[A-Za-z\_]*$', 'Must only contain alphabetic characters and `_`!').minLength(3);
     },
     "data.value": function (value) {
       return Validator.value(value).required();
