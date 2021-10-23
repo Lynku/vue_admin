@@ -19,11 +19,11 @@
         :posibility="data.posibility"
       >
         <button
-          class="btn btn-danger remove"
+          class="btn btn-danger btn-sm"
           type="button"
           @click="toRemove(index)"
+          v-html="icons.delete"
         >
-          -
         </button>
       </field-option>
     </div>
@@ -36,6 +36,7 @@
 
 <script>
 import FieldOption from "../components/FieldOption.vue";
+import icons from "../assets/svg";
 import http from "../http";
 
 export default {
@@ -44,9 +45,11 @@ export default {
   },
   name: "EditType",
   data: () => ({
+    icons: {},
     data: { type: { name: "" } },
   }),
   mounted: function () {
+    this.icons = icons;
     if (this.$route.params.id) {
       http.get("type/" + this.$route.params.id).then((r) => {
         this.data = r.data;
@@ -91,8 +94,5 @@ export default {
 };
 </script>
 <style scoped>
-.remove {
-  max-width: 32px;
-  align-self: end;
-}
+
 </style>

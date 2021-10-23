@@ -1,7 +1,8 @@
 <template>
-<div>
+  <div>
     <div v-if="data.settings">
       <field-settings
+        ref="forms"
         v-for="(filed, index) in data.settings"
         :key="filed.id"
         :data="filed"
@@ -14,9 +15,13 @@
         ></button>
       </field-settings>
     </div>
-    <button class="btn btn-success" type="button" @click="newOption()"> + ADD </button>
-    <button class="btn btn-primary" type="button" @click="save()">Save</button>
-</div>
+    <button class="btn btn-success" type="button" @click="newOption()">
+      + ADD
+    </button>
+    <button class="btn btn-primary" type="button" @click="submit()">
+      Save
+    </button>
+  </div>
 </template>
 
 <script>
@@ -45,29 +50,38 @@ export default {
   },
   methods: {
     newOption() {
-      this.data['settings'].push({
+      this.data["settings"].push({
         value: "",
         name: "",
       });
     },
     toRemove(index) {
-      if (this.data['settings'][index]["id"] != undefined) {
-        this.data["remove"].push(this.data['settings'][index]["id"]);
+      if (this.data["settings"][index]["id"] != undefined) {
+        this.data["remove"].push(this.data["settings"][index]["id"]);
       }
-      this.data['settings'].splice(index, 1);
+      this.data["settings"].splice(index, 1);
     },
-    save() {
-      http.post("settings", this.data).then((r) => {
-        this.$router.go(0);
-      });
+    submit() {
+      Promise.all(
+        this.$refs.forms.map(function (form) {
+          return form.validate();
+        })
+      ).then(this._save);
+    },
+    _save(results) {
+      if (
+        results.filter(function (result) {
+          return !result;
+        }).length === 0
+      ) {
+        http.post("settings", this.data).then((r) => {
+          this.$router.go(0);
+        });
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.remove {
-  max-width: 32px;
-  align-self: end;
-}
 </style>

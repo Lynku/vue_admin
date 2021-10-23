@@ -1,8 +1,6 @@
 <template>
   <div class="card p-2 mb-2">
-    <slot></slot>
-    <div class="field row">
-      <label class="col-4">Type</label>
+     <div class="input-group mb-3">
       <select v-model='data.type' class="form-control">
         <option
           v-for="(display, posible_type) in posibility"
@@ -13,20 +11,16 @@
           {{ display }}
         </option>
       </select>
-    </div>
-
-    <div class="field row">
-      <label class="col-4">Name</label>
+      <span class="input-group-text"> / </span>
       <input
         class="form-control"
         type="text"
         :name="data.name"
         v-model="data.name"
       />
-    </div>
-    <div class="field row" v-if="data.type == 'CheckboxInput' || data.type == 'DropdownInput'">
-      <label class="col-12">Options</label>
-      <textarea class="form-control"> </textarea>
+      <span class="input-group-text">
+        <slot></slot>
+      </span>
     </div>
   </div>
 </template>
