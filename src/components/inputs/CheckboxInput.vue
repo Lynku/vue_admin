@@ -1,15 +1,19 @@
 <template>
   <div class="field position-relative">
-    <label class="d-block"> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
-    <input
-      :for="'l_' + data.name"
-      type="checkbox"
-      :name="data.name"
-      :id="data.name"
-      value="x"
-      v-model="data.value"
-    />
-    - add repeater
+    <label class="d-block">
+      {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label
+    >
+    <div v-if="data.options">
+      <div v-for="(val, key) in data.options" :key="key">
+        <label :for="data.name + '_' + key" v-text="key"></label>
+        <input
+          :id="data.name + '_' + key"
+          :value="val"
+          v-model="data.value"
+          type="checkbox"
+        />
+      </div>
+    </div>
     <div class="invalid-tooltip">
       {{ validation.firstError("data.value") }}
     </div>
@@ -17,19 +21,24 @@
 </template>
 
 <script>
-
 import SimpleVueValidation from "simple-vue-validator";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
   name: "CheckboxInput",
   props: {
-        data: {},
+    data: { value: [] },
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).in(["x", "y"]);
+      return Validator.value(value);
     },
+  },
+  mounted: function () {
+    this.data.options = JSON.parse(this.data.options);
+    if (this.data.value != undefined) {
+      this.data.value = JSON.parse([this.data.value]);
+    }
   },
   methods: {
     validate: function () {

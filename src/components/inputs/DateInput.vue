@@ -28,10 +28,12 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).regex(
-        "^[0-9-./]*$",
-        "Invalid date format!"
-      );
+      if (value) {
+        return Validator.value(value).regex(
+          "^[0-9-./]*$",
+          "Invalid date format!"
+        );
+      }
     },
   },
   methods: {

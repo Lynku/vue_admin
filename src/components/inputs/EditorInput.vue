@@ -1,7 +1,11 @@
 <template>
   <div class="field position-relative">
     <label> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
-    <VueTrix :inputId="data.name" v-model="data.value" placeholder="content..."/>
+    <VueTrix
+      :inputId="data.name"
+      v-model="data.value"
+      placeholder="content..."
+    />
     <div class="invalid-tooltip">
       {{ validation.firstError("data.value") }}
     </div>
@@ -23,7 +27,9 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).maxLength(5120);
+      if (value) {
+        return Validator.value(value).maxLength(5120);
+      }
     },
   },
   methods: {

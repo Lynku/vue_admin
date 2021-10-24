@@ -39,20 +39,30 @@
       </span>
       <div
         class="field row"
-        v-if="data.type == 'CheckboxInput' || data.type == 'DropdownInput'"
+        v-if="
+          data.type == 'CheckboxInput' ||
+          data.type == 'DropdownInput' ||
+          data.type == 'RadioInput'
+        "
       >
         <label class="col-12">Options</label>
-        <textarea class="form-control" v-model="data.options"> </textarea>
+        <small><code> Add option as JOSN key:vlaue pare, Ex: {"us":1, "ru":7, "ro":"40"}</code></small>
+        <textarea class="form-control" v-model="data.options">
+        </textarea>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import vueJsonEditor from "vue-json-editor";
 import SimpleVueValidation from "simple-vue-validator";
 const Validator = SimpleVueValidation.Validator;
 
 export default {
+  components: {
+    vueJsonEditor,
+  },
   name: "FieldOption",
   props: {
     posibility: {},

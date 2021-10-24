@@ -27,7 +27,9 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).digit();
+      if (value) {
+        return Validator.value(value).digit();
+      }
     },
   },
   methods: {

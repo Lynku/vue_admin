@@ -1,6 +1,6 @@
 <template>
   <div class="field position-relative">
-    <label> {{data.name.toUpperCase().replace(/\_/g,' ')}}</label>
+    <label> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
     <input
       type="text"
       :name="data.name"
@@ -27,7 +27,9 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).maxLength(255);
+      if (value) {
+        return Validator.value(value).maxLength(255);
+      }
     },
   },
   methods: {

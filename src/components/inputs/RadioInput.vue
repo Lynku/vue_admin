@@ -1,25 +1,20 @@
 <template>
   <div class="field position-relative">
-    <label  class="d-block">{{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
-    x
-    <input
-      :for="'l_' + data.name"
-      :name="data.name"
-      :id="data.name"
-      value="x"
-      v-model="data.value"
-      type="radio"
-    />
-    y
-    <input
-      :for="'l_' + data.name"
-      :name="data.name"
-      :id="data.name"
-      value="y"
-      v-model="data.value"
-      type="radio"
-    />
-    - add repeater
+    <label class="d-block">{{
+      data.name.toUpperCase().replace(/\_/g, " ")
+    }}</label>
+    <div v-if="data.options">
+      <div v-for="(val, key) in data.options" :key="key">
+        <label :for="data.name + '_' + key" v-text="key"></label>
+        <input
+          :name="data.name"
+          :id="data.name + '_' + key"
+          :value="val"
+          v-model="data.value"
+          type="radio"
+        />
+      </div>
+    </div>
     <div class="invalid-tooltip">
       {{ validation.firstError("data.value") }}
     </div>
@@ -38,9 +33,14 @@ export default {
   data: () => ({
     dataValue: this.data,
   }),
+  mounted: function () {
+    this.data.options = JSON.parse(this.data.options);
+  },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).in(["x", "y"]);
+      if (value) {
+        return Validator.value(value).required();
+      }
     },
   },
   methods: {

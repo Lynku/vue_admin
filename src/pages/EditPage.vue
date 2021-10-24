@@ -79,7 +79,7 @@ export default {
     if (this.$route.params.type) {
       http.get("page/new/" + this.$route.params.type).then((r) => {
         this.data = r.data;
-        this.data["page"] = { name: "" };
+        this.data["page"] = { name: "" , content:''};
       });
     } else {
       http.get("page/" + this.$route.params.id).then((r) => {

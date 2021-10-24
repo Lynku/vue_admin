@@ -27,10 +27,12 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).regex(
-        "^[0-9 -+()]*$",
-        "Phone number should only contain numbers and/or `+,-,(,)`!"
-      );
+      if (value) {
+        return Validator.value(value).regex(
+          "^[0-9 -+()]*$",
+          "Phone number should only contain numbers and/or `+,-,(,)`!"
+        );
+      }
     },
   },
   methods: {

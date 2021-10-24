@@ -1,6 +1,6 @@
 <template>
-  <div class="field  position-relative">
-    <label >
+  <div class="field position-relative">
+    <label>
       {{ data.name.toUpperCase().replace(/\_/g, " ") }}
     </label>
     <br />
@@ -30,10 +30,12 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).regex(
-        "^#[0-9a-f]{3}([0-9a-f]{3})?$",
-        "Invalid color code!"
-      );
+      if (value) {
+        return Validator.value(value).regex(
+          "^#[0-9a-f]{3}([0-9a-f]{3})?$",
+          "Invalid color code!"
+        );
+      }
     },
   },
   methods: {

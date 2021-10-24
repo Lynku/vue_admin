@@ -27,7 +27,9 @@ export default {
   },
   validators: {
     "data.value": function (value) {
-      return Validator.value(value).url().maxLength(255);
+      if (value) {
+        return Validator.value(value).url().maxLength(255);
+      }
     },
   },
   methods: {

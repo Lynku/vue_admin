@@ -69,7 +69,7 @@ export default {
       this.data["options"].push({
         type: "",
         name: "",
-        options: "{}",
+        options: {},
       });
     },
     toRemove(index) {
