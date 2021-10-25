@@ -1,17 +1,19 @@
-import Vue from "vue";
-import Vuex from "vuex";
-
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    message: null
+const store = {
+  get(key){
+    return JSON.parse(localStorage.getItem(key)) || []  
   },
-  mutations: {
-    UPDATE_MESSAGE(state, payload) {
-      state.message = payload;
-    }
+  set(key, val){
+    localStorage.setItem(key, JSON.stringify(val));
+  },
+  del(key){
+    localStorage.removeItem(key);  
+  },
+  clean(){
+    localStorage.clear();
+  },
+  is(){
+    return !!localStorage.getItem('token');
   }
-});
+};
 
 export default store;

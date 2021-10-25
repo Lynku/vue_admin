@@ -33,6 +33,7 @@
 <script>
 import { routes, router } from "../router";
 import icons from "../assets/svg";
+import store from "../store";
 import http from "../http";
 
 export default {
@@ -80,8 +81,9 @@ export default {
     },
   },
   mounted: function () {
-    http.get("types").then((r) => {
-      r.data.forEach((e) => {
+    let menu = store.get("app.navigation");
+    if (menu.length) {
+      menu.forEach((e) => {
         this.linkPagesTop.push({
           path: "/pages/" + e.id,
           params: { type: e.id },
@@ -90,7 +92,20 @@ export default {
           icon: icons.sticky,
         });
       });
-    });
+    } else {
+      http.get("types").then((r) => {
+        store.set("app.navigation", r.data);
+        r.data.forEach((e) => {
+          this.linkPagesTop.push({
+            path: "/pages/" + e.id,
+            params: { type: e.id },
+            name: e.name,
+            position: "top",
+            icon: icons.sticky,
+          });
+        });
+      });
+    }
   },
 };
 </script>

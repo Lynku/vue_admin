@@ -35,6 +35,7 @@
 import TitleInput from "../components/inputs/TitleInput.vue";
 import FieldOption from "../components/FieldOption.vue";
 import icons from "../assets/svg";
+import store from "../store";
 import http from "../http";
 
 export default {
@@ -97,10 +98,12 @@ export default {
       ) {
         if (this.$route.params.id) {
           http.put("type/" + this.$route.params.id, this.data).then((r) => {
+            store.del("app.navigation");
             this.$router.go(0);
           });
         } else {
           http.post("type/new", this.data).then((r) => {
+            store.del("app.navigation");
             this.$router.push("/types");
           });
         }

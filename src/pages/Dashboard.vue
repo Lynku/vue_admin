@@ -7,8 +7,13 @@
 </template>
 
 <script>
-
+import store from "../store";
 export default {
   name: 'Dashboard',
+  mounted() {
+    if(!store.is()){
+      this.$router.go(0)
+    }
+  },
 };
 </script>
