@@ -82,12 +82,9 @@ export let routes = [
   }
 ];
 
-
-
 export const router = new VueRouter({
   routes,
   mode: 'history'
 });
-
 
 export default router;
