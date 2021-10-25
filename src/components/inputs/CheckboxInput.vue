@@ -38,6 +38,8 @@ export default {
     this.data.options = JSON.parse(this.data.options);
     if (this.data.value != undefined) {
       this.data.value = JSON.parse([this.data.value]);
+    }else{
+      this.data.value = [];
     }
   },
   methods: {
