@@ -1,7 +1,17 @@
 <template>
   <div class="field position-relative">
     <label> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
-    <input
+    <el-input
+      type="url"
+      :name="data.name"
+      :id="data.name"
+      :placeholder="data.name"
+      :class="{ 'is-invalid': validation.hasError('data.value') }"
+      v-model="data.value"
+    >
+      <template slot="prepend">http://</template>
+    </el-input>
+    <!-- <input
       type="url"
       :name="data.name"
       :id="data.name"
@@ -9,7 +19,7 @@
       class="form-control"
       :class="{ 'is-invalid': validation.hasError('data.value') }"
       v-model="data.value"
-    />
+    /> -->
     <div class="invalid-tooltip">
       {{ validation.firstError("data.value") }}
     </div>
@@ -28,7 +38,9 @@ export default {
   validators: {
     "data.value": function (value) {
       if (value) {
-        return Validator.value(value).url().maxLength(255);
+        return Validator.value(value)
+          .regex("([a-z0-9|-]+.)*[a-z0-9|-]+.[a-z]+", "Invalid URL!")
+          .maxLength(255);
       }
     },
   },

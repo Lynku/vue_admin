@@ -1,14 +1,14 @@
 <template>
   <div class="field position-relative">
-    <input
+    <el-input
       type="text"
       :name="fieldName"
       :id="fieldName"
       :placeholder="fieldName"
-      class="form-control"
       v-model="data.name"
       :class="{ 'is-invalid': validation.hasError('data.name') }"
-    />
+    >
+    </el-input>
     <div class="invalid-tooltip">
       {{ validation.firstError("data.name") }}
     </div>
@@ -34,7 +34,7 @@ export default {
     },
   },
   validators: {
-    'data.name': function (value) {
+    "data.name": function (value) {
       return Validator.value(value).required().minLength(3);
     },
   },
@@ -44,7 +44,7 @@ export default {
         function (success) {
           if (success) {
             return {
-             'data.name': this.data.name,
+              "data.name": this.data.name,
             };
           }
         }.bind(this)

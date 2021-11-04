@@ -6,15 +6,10 @@
       v-model="data.value"
       placeholder="content..."
     />
-    <div class="invalid-tooltip">
-      {{ validation.firstError("data.value") }}
-    </div>
   </div>
 </template>
 
 <script>
-import SimpleVueValidation from "simple-vue-validator";
-const Validator = SimpleVueValidation.Validator;
 import VueTrix from "vue-trix";
 
 export default {
@@ -24,29 +19,6 @@ export default {
   name: "EditorInput",
   props: {
     data: {},
-  },
-  validators: {
-    "data.value": function (value) {
-      if (value) {
-        return Validator.value(value).maxLength(5120);
-      }
-    },
-  },
-  methods: {
-    validate: function () {
-      return this.$validate().then(
-        function (success) {
-          if (success) {
-            return {
-              "data.value": this.data.value,
-            };
-          }
-        }.bind(this)
-      );
-    },
-    reset: function () {
-      this.validation.reset();
-    },
   },
   data: () => ({
     dataValue: this.data,

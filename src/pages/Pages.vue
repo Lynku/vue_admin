@@ -1,46 +1,45 @@
 <template>
   <div>
     <router-link class="btn btn-sm btn-primary float-end" :to="newPageURL">
-      + Add New
+      <el-button type="primary"> + Add New </el-button>
     </router-link>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Title</th>
-          <th scope="col">Status</th>
-          <th scope="col" class="text-end">Acrtions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="page in pages" :key="page.id">
-          <th scope="row">{{ page.id }}</th>
-          <td>{{ page.name }}</td>
-          <td>{{ page.status }}</td>
-          <td class="text-end">
-            <router-link class="btn btn-success" :to="'/page/' + page.id">
-              <span v-html="icons.edit"></span>
-            </router-link>
-            <a class="btn btn-danger" @click="remove(page.id)">
-              <span v-html="icons.delete"></span>
-              
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <el-table :data="pages" style="width: 100%">
+      <el-table-column label="#" width="50">
+        <template slot-scope="scope">
+          <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" label="Title"></el-table-column>
+      <el-table-column label="Status">
+        <template slot-scope="scope">
+          <span>{{ scope.row.status }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Operations">
+        <template slot-scope="scope">
+          <router-link :to="'/page/' + scope.row.id">
+            <el-button size="mini" type="primary" plain> Edit </el-button>
+          </router-link>
+          <el-button
+            size="mini"
+            type="danger"
+            plain
+            @click="remove(scope.$index, scope.row.id)"
+            >Delete</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
 import http from "../http";
-import icons from '../assets/svg'
 export default {
   name: "Pages",
   data: () => ({
     newPageURL: "",
     pages: [],
-    icons
   }),
   watch: {
     pages: function (newVal, oldVal) {
@@ -49,19 +48,28 @@ export default {
     },
   },
   mounted: function () {
-    this.icons = icons;
     this.newPageURL = "/page/new/" + this.$route.params.type;
     http.get("pages/" + this.$route.params.type).then((r) => {
       this.pages = r.data;
     });
   },
   methods: {
-    remove(id) {
-      if (confirm("Are you sure?")) {
-        http.delete("page/" + id).then((r) => {
-          this.$router.go(this.$router.currentRoute);
-        });
-      }
+    remove(index, id) {
+      this.$confirm("Are you sure?", "Warning", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+        type: "error",
+      })
+        .then(() => {
+          http.delete("page/" + id).then((r) => {
+            //this.$router.go(this.$router.currentRoute);
+            this.$message({
+              type: "success",
+              message: "Delete completed",
+            });
+          });
+        })
+        .catch(() => {});
     },
   },
 };

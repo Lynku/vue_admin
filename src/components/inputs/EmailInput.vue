@@ -1,15 +1,16 @@
 <template>
   <div class="field position-relative">
     <label> {{ data.name.toUpperCase().replace(/\_/g, " ") }}</label>
-    <input
-      type="email"
+    <el-input
+      type="text"
       :name="data.name"
       :id="data.name"
       :placeholder="data.name"
-      class="form-control"
       :class="{ 'is-invalid': validation.hasError('data.value') }"
       v-model="data.value"
-    />
+    >
+      <template slot="prepend"><i class="el-icon-message"></i></template>
+    </el-input>
     <div class="invalid-tooltip">
       {{ validation.firstError("data.value") }}
     </div>
